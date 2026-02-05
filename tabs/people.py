@@ -188,6 +188,6 @@ def render():
 
                     if p["link"]:
                         st.markdown("**Profile / Website**")
-                        url = normalize_link(p["links"])
+                        url = normalize_link(p["link"])
                         st.markdown(f"- 🔗 [Visit profile]({url})")
 
