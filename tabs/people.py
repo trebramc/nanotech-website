@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+from pathlib import Path
 
 # -------------------------------------------------
 # LOAD DATA
@@ -18,7 +19,7 @@ def clean_text(value):
     return "" if pd.isna(value) else str(value).strip()
 
 def resolve_image(image_value):
-    if pd.isna(image_value):
+    if pd.isna(image_value) or not image_value:
         return "assets/people/placeholder.png"
 
     base = os.path.splitext(str(image_value))[0]
@@ -28,6 +29,21 @@ def resolve_image(image_value):
             return path
 
     return "assets/people/placeholder.png"
+
+def subtitle_text(p):
+    if p["status"] == "Graduated":
+        return "Alumni"
+    if p["role"] == "Student":
+        return f"{p['level']} · {p['status']}".strip(" ·")
+    return p["role"]
+
+def normalize_link(url):
+    """Ensure links are clickable even if http(s) is missing"""
+    if not url:
+        return ""
+    if url.startswith("http://") or url.startswith("https://"):
+        return url
+    return f"https://{url}"
 
 # -------------------------------------------------
 # RENDER TAB
@@ -59,7 +75,7 @@ def render():
     )
 
     # -------------------------------------------------
-    # STYLES — NAME BOX LIKE STATS
+    # STYLES
     # -------------------------------------------------
     st.markdown("""
     <style>
@@ -91,13 +107,6 @@ def render():
         -webkit-text-fill-color: transparent;
         font-weight: 700;
     }
-
-    /* Make the popover trigger invisible but clickable */
-    .popover-overlay button {
-        opacity: 0;
-        position: absolute;
-        inset: 0;
-    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -118,7 +127,7 @@ def render():
                 if pd.notna(row.get("research"))
                 else []
             ),
-            "email": clean_text(row.get("email")),
+            "link": clean_text(row.get("link")),
         })
 
     # -------------------------------------------------
@@ -153,22 +162,21 @@ def render():
                     f"""
                     <div class="name-box">
                         <div class="name-box-name">{p['name']}</div>
-                        <div class="name-box-role">{p['level'] or p['role']}</div>
+                        <div class="name-box-role">{subtitle_text(p)}</div>
                     </div>
                     """,
                     unsafe_allow_html=True
                 )
 
                 # ---- POPOVER ----
-                with st.popover(" ", use_container_width=True):
+                with st.popover("View details", use_container_width=True):
+
                     st.markdown(
                         f"<h3 class='popover-name'>{p['name']}</h3>",
                         unsafe_allow_html=True
                     )
 
-                    subtitle = " · ".join(filter(None, [p["role"], p["level"]]))
-                    if subtitle:
-                        st.caption(subtitle)
+                    st.caption(subtitle_text(p))
 
                     if p["bio"]:
                         st.write(p["bio"])
@@ -178,6 +186,8 @@ def render():
                         for r in p["research"]:
                             st.markdown(f"- {r}")
 
-                    if p["email"]:
-                        st.markdown("**Contact**")
-                        st.write(p["email"])
+                    if p["link"]:
+                        st.markdown("**Profile / Website**")
+                        url = normalize_link(p["link"])
+                        st.markdown(f"- 🔗 [Visit profile]({url})")
+
