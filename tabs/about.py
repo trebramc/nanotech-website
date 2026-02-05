@@ -28,6 +28,11 @@ def count_people(df, role=None, level=None, status=None):
 
     return len(temp)
 
+def count_alumni(df):
+    ms = count_people(df, role="Student", level="MS", status="Graduated")
+    ug = count_people(df, role="Student", level="Undergraduate", status="Graduated")
+    return ms + ug
+
 # -------------------------------------------------
 # RENDER TAB
 # -------------------------------------------------
