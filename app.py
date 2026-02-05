@@ -82,7 +82,7 @@ tabs = st.tabs([
     "Home",
     "Research Areas",
     "Publications",
-    "Active Projects",
+    "Active Research",
     "People",
     "Tools",
     "Contact",
