@@ -127,7 +127,7 @@ def render():
                 if pd.notna(row.get("research"))
                 else []
             ),
-            "link": clean_text(row.get("link")),
+            "link": clean_text(row.get("links")),
         })
 
     # -------------------------------------------------
@@ -188,6 +188,6 @@ def render():
 
                     if p["link"]:
                         st.markdown("**Profile / Website**")
-                        url = normalize_link(p["link"])
+                        url = normalize_link(p["links"])
                         st.markdown(f"- 🔗 [Visit profile]({url})")
 
