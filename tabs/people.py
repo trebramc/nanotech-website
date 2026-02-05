@@ -164,6 +164,7 @@ def render():
                         <div class="name-box-name">{p['name']}</div>
                         <div class="name-box-role">{subtitle_text(p)}</div>
                     </div>
+                    <div style="height:12px;"></div>
                     """,
                     unsafe_allow_html=True
                 )
