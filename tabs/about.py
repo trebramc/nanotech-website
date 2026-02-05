@@ -178,25 +178,25 @@ def render():
     # THROUGH THE YEARS
     # -------------------------------------------------
     st.subheader("Through the Years")
-
+    
     c1, c2, c3, c4 = st.columns(4, gap="large")
-
+    
     with c1:
         st.markdown(f"""
         <div class="stat">
-            <h1>{count_people(df, role="Student", level="MS", status="Graduated")}</h1>
-            <p>Graduated MS Students</p>
+            <h1>{count_alumni(df)}</h1>
+            <p>Alumni</p>
         </div>
         """, unsafe_allow_html=True)
-
+    
     with c2:
         st.markdown(f"""
         <div class="stat">
-            <h1>{count_people(df, role="Student", level="Undergraduate", status="Graduated")}</h1>
-            <p>Graduated Undergraduates</p>
+            <h1>{count_people(df, role="Student", level="MS", status="Current")}</h1>
+            <p>Current Graduate Students</p>
         </div>
         """, unsafe_allow_html=True)
-
+    
     with c3:
         st.markdown(f"""
         <div class="stat">
@@ -204,7 +204,7 @@ def render():
             <p>Current Undergraduates</p>
         </div>
         """, unsafe_allow_html=True)
-
+    
     with c4:
         st.markdown(f"""
         <div class="stat">
@@ -212,3 +212,4 @@ def render():
             <p>Current Faculty</p>
         </div>
         """, unsafe_allow_html=True)
+
