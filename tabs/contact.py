@@ -69,7 +69,7 @@ def render():
                 margin-bottom: 14px;
             ">
                 <strong>Email</strong><br>
-                <a href="mailto:icdelacruz1@up.edu.ph">icdelacruz1@up.edu.ph</a>
+                <a href="mailto:updnanotechnology@gmail.com">updnanotechnology@gmail.com</a>
             </div>
             """,
             unsafe_allow_html=True
